@@ -1,0 +1,25 @@
+﻿version: "3.9"
+services:
+  postgres:
+    image: postgres:16
+    container_name: xo-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: xo
+    volumes:
+      - xo_pgdata:/var/lib/postgresql/data
+
+  migrate:
+    image: migrate/migrate:v4.16.2
+    depends_on:
+      - postgres
+    volumes:
+      - ./migrations:/migrations
+    entrypoint: ["/bin/sh","-c"]
+    command: ["sleep 2 && migrate -path /migrations -database postgres://postgres:postgres@postgres:5432/xo?sslmode=disable up"]
+
+volumes:
+  xo_pgdata:

@@ -1,0 +1,8 @@
+﻿server:
+  http_port: 8080
+jwt:
+  secret: "change-me"
+  ttl: "24h"
+db:
+  conn_string: "postgres://postgres:postgres@localhost:5432/xo?sslmode=disable"
+  max_conns: 10
