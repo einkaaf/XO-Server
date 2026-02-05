@@ -16,6 +16,10 @@ This document is the full project guide: setup, architecture, business rules, HT
 8. WebSocket API
 9. Client Flow (Step-by-Step)
 10. Operational Notes
+11. Swagger UI (HTTP API)
+12. Postman Collection
+13. License
+14. Caution (Production Use)
 
 ## 1) What This Server Does
 
@@ -518,3 +522,23 @@ It includes Health, Register, and Login requests with variables:
 3. Run `Register` then `Login`. Login stores `token` and `user_id` automatically.
 4. Use the `WebSocket -> Connect (WS)` item to open a WS session.
 5. Send WS messages from the Postman WS UI using the templates in the request description.
+
+## 13) License
+
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0). See `LICENSE`.
+
+Summary (non-legal):
+
+- You can use, modify, and distribute this project.
+- If you distribute a modified version, you must also publish the source code under the same GPL-3.0 license.
+- There is no warranty; use at your own risk.
+
+## 14) Caution (Production Use)
+
+If you deploy this in production, consider:
+
+- Use a strong `jwt.secret` and rotate it if leaked.
+- Serve over HTTPS and secure WebSocket (`wss://`).
+- Add proper origin checks for WebSocket connections.
+- Add rate limiting and abuse protection.
+- The matchmaking queue is in-memory; it resets on server restart.
