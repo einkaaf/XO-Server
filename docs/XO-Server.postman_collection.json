@@ -99,7 +99,135 @@
       "item": [
         {
           "name": "Connect (WS)",
-          "description": "Connect to the WebSocket and then send messages from Postman's WS UI.\n\nExamples:\njoin_queue: {\"type\":\"join_queue\",\"payload\":{}}\nmove: {\"type\":\"move\",\"payload\":{\"game_id\":\"<uuid>\",\"position\":0}}\nchat: {\"type\":\"chat\",\"payload\":{\"game_id\":\"<uuid>\",\"message\":\"hi\"}}\nresign: {\"type\":\"resign\",\"payload\":{\"game_id\":\"<uuid>\"}}\ndraw_offer: {\"type\":\"draw_offer\",\"payload\":{\"game_id\":\"<uuid>\"}}\ndraw_accept: {\"type\":\"draw_accept\",\"payload\":{\"game_id\":\"<uuid>\"}}\ndraw_decline: {\"type\":\"draw_decline\",\"payload\":{\"game_id\":\"<uuid>\"}}\nsync: {\"type\":\"sync\",\"payload\":{}}",
+          "description": "Open a WebSocket connection. Use the items below as message templates.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "join_queue",
+          "description": "Send this WS message:\n{\"type\":\"join_queue\",\"payload\":{}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "move",
+          "description": "Send this WS message:\n{\"type\":\"move\",\"payload\":{\"game_id\":\"{{game_id}}\",\"position\":0}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "chat",
+          "description": "Send this WS message:\n{\"type\":\"chat\",\"payload\":{\"game_id\":\"{{game_id}}\",\"message\":\"hi\"}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "resign",
+          "description": "Send this WS message:\n{\"type\":\"resign\",\"payload\":{\"game_id\":\"{{game_id}}\"}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "draw_offer",
+          "description": "Send this WS message:\n{\"type\":\"draw_offer\",\"payload\":{\"game_id\":\"{{game_id}}\"}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "draw_accept",
+          "description": "Send this WS message:\n{\"type\":\"draw_accept\",\"payload\":{\"game_id\":\"{{game_id}}\"}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "draw_decline",
+          "description": "Send this WS message:\n{\"type\":\"draw_decline\",\"payload\":{\"game_id\":\"{{game_id}}\"}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "sync",
+          "description": "Send this WS message:\n{\"type\":\"sync\",\"payload\":{}}",
           "request": {
             "method": "GET",
             "header": [],
@@ -120,6 +248,7 @@
     { "key": "baseUrl", "value": "http://localhost:8080" },
     { "key": "wsBaseUrl", "value": "ws://localhost:8080" },
     { "key": "token", "value": "" },
-    { "key": "user_id", "value": "" }
+    { "key": "user_id", "value": "" },
+    { "key": "game_id", "value": "" }
   ]
 }
