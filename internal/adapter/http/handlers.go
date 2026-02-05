@@ -3,6 +3,8 @@
 import (
     "encoding/json"
     "net/http"
+    "os"
+    "path/filepath"
 
     "xo-server/internal/domain"
     "xo-server/internal/usecase"
@@ -20,6 +22,10 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
     mux.HandleFunc("/health", h.handleHealth)
     mux.HandleFunc("/api/register", h.handleRegister)
     mux.HandleFunc("/api/login", h.handleLogin)
+    mux.HandleFunc("/docs", h.handleSwaggerUI)
+    mux.HandleFunc("/openapi.yaml", h.handleOpenAPI)
+    swaggerDir := filepath.Join("docs", "swagger-ui")
+    mux.Handle("/swagger-ui/", http.StripPrefix("/swagger-ui/", http.FileServer(http.Dir(swaggerDir))))
 }
 
 func (h *Handler) handleHealth(w http.ResponseWriter, r *http.Request) {
@@ -105,4 +111,32 @@ func writeJSON(w http.ResponseWriter, status int, v interface{}) {
     w.Header().Set("Content-Type", "application/json")
     w.WriteHeader(status)
     _ = json.NewEncoder(w).Encode(v)
+}
+
+func (h *Handler) handleSwaggerUI(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+        w.WriteHeader(http.StatusMethodNotAllowed)
+        return
+    }
+    serveDocsFile(w, "swagger.html", "text/html; charset=utf-8")
+}
+
+func (h *Handler) handleOpenAPI(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+        w.WriteHeader(http.StatusMethodNotAllowed)
+        return
+    }
+    serveDocsFile(w, "openapi.yaml", "application/yaml")
+}
+
+func serveDocsFile(w http.ResponseWriter, name, contentType string) {
+    path := filepath.Join("docs", name)
+    b, err := os.ReadFile(path)
+    if err != nil {
+        writeError(w, http.StatusNotFound, "docs file not found")
+        return
+    }
+    w.Header().Set("Content-Type", contentType)
+    w.WriteHeader(http.StatusOK)
+    _, _ = w.Write(b)
 }

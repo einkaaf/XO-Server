@@ -471,3 +471,50 @@ Server sends `sync` with active games.
 - Games and history are persisted to Postgres.
 - This server does not include rate limiting or admin APIs.
 - This server has no spectators by design.
+
+## 11) Swagger UI (HTTP API)
+
+When the server is running, open:
+
+- Swagger UI: `http://localhost:8080/docs`
+- OpenAPI spec: `http://localhost:8080/openapi.yaml`
+
+For fully offline Swagger UI, download assets into `docs/swagger-ui`:
+
+- Windows: `scripts\vendor_swagger.ps1`
+- Linux/macOS: `scripts/vendor_swagger.sh`
+
+Swagger UI is served from `docs/swagger.html` and loads assets from `/swagger-ui/*`.
+The WebSocket API is not part of the OpenAPI spec.
+
+### Offline Swagger Step-by-Step
+
+1. Run one of the vendor scripts:
+   - Windows PowerShell: `scripts\vendor_swagger.ps1`
+   - Linux/macOS: `scripts/vendor_swagger.sh`
+2. Confirm files exist in `docs/swagger-ui`:
+   - `swagger-ui.css`
+   - `swagger-ui-bundle.js`
+   - `swagger-ui-standalone-preset.js`
+   - `favicon-16x16.png`
+   - `favicon-32x32.png`
+3. Start the server and open `http://localhost:8080/docs`.
+
+If the assets are missing, the Swagger page will show a notice telling you to run the vendor script.
+
+## 12) Postman Collection
+
+Import `docs/XO-Server.postman_collection.json` in Postman.
+It includes Health, Register, and Login requests with variables:
+
+- `baseUrl` (default `http://localhost:8080`)
+- `token`
+- `user_id`
+
+### Postman Step-by-Step
+
+1. Open Postman and import `docs/XO-Server.postman_collection.json`.
+2. Set `baseUrl` if your server is not on `http://localhost:8080`.
+3. Run `Register` then `Login`. Login stores `token` and `user_id` automatically.
+4. Use the `WebSocket -> Connect (WS)` item to open a WS session.
+5. Send WS messages from the Postman WS UI using the templates in the request description.

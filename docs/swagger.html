@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XO Server API Docs</title>
+    <link rel="stylesheet" href="/swagger-ui/swagger-ui.css" />
+    <link rel="icon" type="image/png" href="/swagger-ui/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/swagger-ui/favicon-16x16.png" sizes="16x16" />
+    <style>
+      html, body { margin: 0; padding: 0; height: 100%; }
+      #swagger-ui { height: 100%; }
+      #offline-note { font-family: Arial, sans-serif; padding: 12px; }
+      #offline-note code { background: #f2f2f2; padding: 2px 4px; }
+    </style>
+  </head>
+  <body>
+    <div id="offline-note" style="display:none">
+      Swagger UI assets are missing. Run <code>scripts\vendor_swagger.ps1</code> (Windows) or
+      <code>scripts/vendor_swagger.sh</code> (Linux/macOS) to download them for offline use.
+    </div>
+    <div id="swagger-ui"></div>
+    <script src="/swagger-ui/swagger-ui-bundle.js"></script>
+    <script src="/swagger-ui/swagger-ui-standalone-preset.js"></script>
+    <script>
+      window.onload = () => {
+        if (typeof SwaggerUIBundle === 'undefined') {
+          document.getElementById('offline-note').style.display = 'block';
+          return;
+        }
+        const ui = SwaggerUIBundle({
+          url: '/openapi.yaml',
+          dom_id: '#swagger-ui',
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          layout: 'BaseLayout'
+        })
+        window.ui = ui
+      }
+    </script>
+  </body>
+</html>

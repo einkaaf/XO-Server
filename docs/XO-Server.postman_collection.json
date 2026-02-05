@@ -1,0 +1,125 @@
+{
+  "info": {
+    "_postman_id": "1f6c2c3a-9e7c-4b7c-9a11-5c8d3c6b2c0f",
+    "name": "XO Server API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"alice\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "register"]
+        }
+      }
+    },
+    {
+      "name": "Login (sets token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json && json.token) {",
+              "  pm.collectionVariables.set('token', json.token);",
+              "}",
+              "if (json && json.user_id) {",
+              "  pm.collectionVariables.set('user_id', json.user_id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"alice\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "login"]
+        }
+      }
+    },
+    {
+      "name": "Docs (Swagger UI)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/docs",
+          "host": ["{{baseUrl}}"],
+          "path": ["docs"]
+        }
+      }
+    },
+    {
+      "name": "OpenAPI Spec",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/openapi.yaml",
+          "host": ["{{baseUrl}}"],
+          "path": ["openapi.yaml"]
+        }
+      }
+    },
+    {
+      "name": "WebSocket",
+      "item": [
+        {
+          "name": "Connect (WS)",
+          "description": "Connect to the WebSocket and then send messages from Postman's WS UI.\n\nExamples:\njoin_queue: {\"type\":\"join_queue\",\"payload\":{}}\nmove: {\"type\":\"move\",\"payload\":{\"game_id\":\"<uuid>\",\"position\":0}}\nchat: {\"type\":\"chat\",\"payload\":{\"game_id\":\"<uuid>\",\"message\":\"hi\"}}\nresign: {\"type\":\"resign\",\"payload\":{\"game_id\":\"<uuid>\"}}\ndraw_offer: {\"type\":\"draw_offer\",\"payload\":{\"game_id\":\"<uuid>\"}}\ndraw_accept: {\"type\":\"draw_accept\",\"payload\":{\"game_id\":\"<uuid>\"}}\ndraw_decline: {\"type\":\"draw_decline\",\"payload\":{\"game_id\":\"<uuid>\"}}\nsync: {\"type\":\"sync\",\"payload\":{}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{wsBaseUrl}}/ws?token={{token}}",
+              "host": ["{{wsBaseUrl}}"],
+              "path": ["ws"],
+              "query": [
+                { "key": "token", "value": "{{token}}" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "wsBaseUrl", "value": "ws://localhost:8080" },
+    { "key": "token", "value": "" },
+    { "key": "user_id", "value": "" }
+  ]
+}
